@@ -1,0 +1,55 @@
+{
+    "name": "diff-slider",
+    "description": "Modern Before/After image comparison slider",
+    "author": "LelouchFR",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/LelouchFR/diff-slider.git"
+    },
+    "keywords": [
+        "before-after",
+        "image-comparison",
+        "slider",
+        "compare",
+        "typescript"
+    ],
+    "version": "0.1.1",
+    "type": "module",
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.js",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsup src/index.ts --format esm,cjs --dts --clean && cp src/style.css dist/style.css",
+        "prepublishOnly": "npm run typecheck && npm run build",
+        "typecheck": "tsc",
+        "test": "vitest"
+    },
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "import": {
+                "types": "./dist/index.d.ts",
+                "default": "./dist/index.js"
+            },
+            "require": {
+                "types": "./dist/index.d.cts",
+                "default": "./dist/index.cjs"
+            }
+        },
+        "./style.css": "./dist/style.css"
+    },
+    "files": [
+        "dist"
+    ],
+    "sideEffects": [
+        "**/*.css"
+    ],
+    "devDependencies": {
+        "jsdom": "^30.1.3",
+        "tsup": "^9.0.0",
+        "typescript": "^6.0.3",
+        "vite": "^8.3.5",
+        "vitest": "^5.0.5"
+    }
+}
