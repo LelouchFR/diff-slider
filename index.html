@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+       <meta charset="UTF-8">
+       <meta http-equiv="X-UA-Compatible" content="IE=edge">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <title>Demonstration</title>
+   </head>
+   <body>
+        <div id="ds-el" style="max-width: 600px">
+            <img src="https://go-skill-icons.vercel.app/api/icons?i=nuxtjs,vuejs,tailwindcss,wordpress,react,nodejs,symfony,laravel,htmx&perline=5" />
+            <img src="https://raw.githubusercontent.com/LelouchFR/LelouchFR/a3e1007c29948ef6d5c8d4f22633ab52d71b8740/content/technologies.svg" />
+        </div>
+   </body>
+    <script type="module">
+        import "/src/style.css";
+        import { DiffSlider } from "/src/index.ts";
+
+        const el = document.getElementById("ds-el");
+        if (el) new DiffSlider(el, { start: 50 });
+    </script>
+</html>
