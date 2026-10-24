@@ -2,6 +2,7 @@
 export interface DiffSliderOptions {
     start?: number | undefined;
     onChange?: ((value: number) => void) | undefined;
+    handler?: HTMLElement | undefined;
 }
 
 const clamp = (n: number): number => Math.min(100, Math.max(0, n));
@@ -10,10 +11,13 @@ export class DiffSlider {
     readonly element: HTMLElement;
     private readonly input: HTMLInputElement;
     private readonly handle: HTMLElement;
+    private readonly ownsHandle: boolean;
     private readonly onChange: ((value: number) => void) | undefined;
 
     constructor(element: HTMLElement, options: DiffSliderOptions = {}) {
-        const [before, after] = Array.from(element.children);
+        const children = Array.from(element.children) as HTMLElement[];
+        const handle = options.handler ?? children.find((child) => child.classList.contains("ds-handler"));
+        const [before, after] = children.filter((child) => child !== handle);
         if (!before || !after) throw new Error("DiffSlider: the element needs two children (before, after)");
 
         this.element = element;
@@ -29,9 +33,16 @@ export class DiffSlider {
         this.input.max = "100";
         this.input.setAttribute("aria-label", "Image Comparison");
 
-        this.handle = document.createElement("div");
-        this.handle.className = "ds-handle";
-        this.handle.setAttribute("aria-hidden", "true");
+        if (handle) {
+            this.handle = handle;
+            this.ownsHandle = false;
+            this.handle.classList.add("ds-handler");
+        } else {
+            this.handle = document.createElement("div");
+            this.handle.className = "ds-handler ds-handle";
+            this.handle.setAttribute("aria-hidden", "true");
+            this.ownsHandle = true;
+        }
 
         element.append(this.input, this.handle);
         this.input.addEventListener("input", this.handleInput);
@@ -53,7 +64,7 @@ export class DiffSlider {
     destroy(): void {
         this.input.removeEventListener("input", this.handleInput);
         this.input.remove();
-        this.handle.remove();
+        if (this.ownsHandle) this.handle.remove();
         this.element.classList.remove("ds");
     }
 }

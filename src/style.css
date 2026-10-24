@@ -30,18 +30,26 @@
     cursor: ew-resize;
 }
 
-.ds-handle {
+.ds-handler {
     position: absolute;
-    top: 0;
-    bottom: 0;
+    top: 50%;
     left: var(--ds-position);
-    width: 3px;
-    background: #fff;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     pointer-events: none;
 }
 
-.ds-range:focus-visible ~ .ds-handle {
+.ds-handle {
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: #fff;
+    transform: translateX(-50%);
+}
+
+.ds:has(.ds-range:focus-visible) .ds-handler {
     outline: 2px solid #4c9ffe;
     outline-offset: 2px;
 }
