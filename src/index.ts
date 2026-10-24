@@ -3,6 +3,7 @@ export interface DiffSliderOptions {
     start?: number | undefined;
     onChange?: ((value: number) => void) | undefined;
     handler?: HTMLElement | undefined;
+    horizontal?: boolean | undefined;
 }
 
 const clamp = (n: number): number => Math.min(100, Math.max(0, n));
@@ -11,6 +12,7 @@ export class DiffSlider {
     readonly element: HTMLElement;
     private readonly input: HTMLInputElement;
     private readonly handle: HTMLElement;
+    private readonly horizontal: boolean;
     private readonly ownsHandle: boolean;
     private readonly onChange: ((value: number) => void) | undefined;
 
@@ -22,6 +24,7 @@ export class DiffSlider {
 
         this.element = element;
         this.onChange = options.onChange;
+        this.horizontal = options.horizontal ?? false;
 
         element.classList.add("ds");
         after.classList.add("ds-after");
@@ -42,6 +45,10 @@ export class DiffSlider {
             this.handle.className = "ds-handler ds-handle";
             this.handle.setAttribute("aria-hidden", "true");
             this.ownsHandle = true;
+        }
+
+        if (this.horizontal) {
+            element.classList.add("ds-horizontal");
         }
 
         element.append(this.input, this.handle);
@@ -66,5 +73,6 @@ export class DiffSlider {
         this.input.remove();
         if (this.ownsHandle) this.handle.remove();
         this.element.classList.remove("ds");
+        if (this.horizontal) this.element.classList.remove("ds-horizontal");
     }
 }

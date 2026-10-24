@@ -20,6 +20,10 @@
     clip-path: inset(0 0 0 var(--ds-position));
 }
 
+.ds-horizontal .ds-after {
+    clip-path: inset(var(--ds-position) 0 0 0);
+}
+
 .ds-range {
     position: absolute;
     inset: 0;
@@ -28,6 +32,11 @@
     margin: 0;
     opacity: 0;
     cursor: ew-resize;
+}
+
+.ds-horizontal .ds-range {
+    writing-mode: vertical-lr;
+    cursor: ns-resize;
 }
 
 .ds-handler {
@@ -41,12 +50,26 @@
     pointer-events: none;
 }
 
+.ds-horizontal .ds-handler {
+    top: var(--ds-position);
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .ds-handle {
     top: 0;
     bottom: 0;
     width: 3px;
     background: #fff;
     transform: translateX(-50%);
+}
+
+.ds-horizontal .ds-handle {
+    left: 0;
+    right: 0;
+    width: auto;
+    height: 3px;
+    transform: translateY(-50%);
 }
 
 .ds:has(.ds-range:focus-visible) .ds-handler {
